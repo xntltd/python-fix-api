@@ -1,0 +1,73 @@
+name: build_and_push
+
+on:
+  push:
+    branches: 
+      - main
+    tags:
+      - '*'
+  pull_request:
+    branches: 
+      - main
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Pack project
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+        architecture: ["x64"]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.3.4
+      - name: Setup ${{ matrix.python-version }} on ${{ matrix.architecture }}
+        uses: actions/setup-python@v2.2.1
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.architecture }}
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Lint with flake8
+        run: |
+          flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 src --count --exit-zero --max-complexity=26 --max-line-lengt=250 --statistics
+      - name: Extract tag version
+        id: tagName
+        uses: olegtarasov/get-tag@v2.1
+      - name: Update version
+        run: |
+          sed -i 's/REPLACE_ME_FROM_TAG/${{ steps.tagName.outputs.tag }}/' src/version.py
+      - name: Build package
+        run: |
+          python -m build --sdist --wheel --outdir dist/
+      - name: GitHub Release Create
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tagName.outputs.tag }}
+          release_name: Release v${{ steps.tagName.outputs.tag }}
+          draft: false
+          prerelease: false
+      - name: GitHub Release Upload
+        id: upload_release_github
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/python-http-api-${{ steps.tagName.outputs.tag }}.tar.gz
+          asset_name: python-http-api-${{ steps.tagName.outputs.tag }}.tar.gz
+          asset_content_type: application/gzip
