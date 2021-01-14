@@ -10,7 +10,7 @@ from enum import Enum, auto
 from quickfix import IntArray, Group, SessionID
 from threading import Event
 from typing import Union
-from xnt.models.json_to_obj import FIXMessage
+from xnt.models.fix_jto import FIXMessage
 
 
 class SType(Enum):
