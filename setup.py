@@ -8,7 +8,7 @@ with open(convert_path('src/xnt/version.py')) as metadata_file:
     exec(metadata_file.read(), metadata)
 
 setup(
-    name='python-fix-api',
+    name='xnt-fix-api',
     version=metadata['__version__'],
     zip_safe=False,
 

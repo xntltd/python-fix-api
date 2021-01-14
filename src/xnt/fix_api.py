@@ -13,7 +13,7 @@ import quickfix44 as fxg
 
 from typing import Dict, Optional, Any, List, Union, Type
 
-from src.xnt.models.fix_api_models import OrderStatus, DataType, Status, Reject, BusinessReject, MDSnapshot, MDReject, \
+from xnt.models.fix_api_models import OrderStatus, DataType, Status, Reject, BusinessReject, MDSnapshot, MDReject, \
     ExecutionReport, OrderCancelReject, AccSumResponse, AccSumRej, SecurityList, TradeCaptureAck, TradeCapture, \
     TradeMargin, TradeMarginReject, MDEntryType, OrdType, Side, CFICode, TradeDate, Durations
 

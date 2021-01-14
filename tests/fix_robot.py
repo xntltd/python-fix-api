@@ -10,8 +10,8 @@ from queue import Empty
 from threading import Thread
 from typing import Dict, Optional, Union
 
-from src.xnt.fix_api import Collector, FixAdapter
-from src.xnt.models.fix_api_models import Side, Durations, OrdType, MDEntryType, AccSumResponse, AccSumRej, \
+from xnt.fix_api import Collector, FixAdapter
+from xnt.models.fix_api_models import Side, Durations, OrdType, MDEntryType, AccSumResponse, AccSumRej, \
     MDSnapshot, OrderStatus
 
 
