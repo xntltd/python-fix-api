@@ -47,7 +47,7 @@ jobs:
         uses: olegtarasov/get-tag@v2.1
       - name: Update version
         run: |
-          sed -i 's/REPLACE_ME_FROM_TAG/${{ steps.tagName.outputs.tag }}/' src/version.py
+          sed -i 's/REPLACE_ME_FROM_TAG/${{ steps.tagName.outputs.tag }}/' src/xnt/version.py
       - name: Build package
         run: |
           python -m build --sdist --wheel --outdir dist/
