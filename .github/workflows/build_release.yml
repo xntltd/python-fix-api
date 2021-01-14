@@ -68,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/python-http-api-${{ steps.tagName.outputs.tag }}.tar.gz
-          asset_name: python-http-api-${{ steps.tagName.outputs.tag }}.tar.gz
+          asset_path: ./dist/xnt-fix-api-${{ steps.tagName.outputs.tag }}.tar.gz
+          asset_name: xnt-fix-api-${{ steps.tagName.outputs.tag }}.tar.gz
           asset_content_type: application/gzip
