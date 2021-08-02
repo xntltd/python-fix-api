@@ -1,6 +1,6 @@
 # python-http-api
 
-Python library for XNT Ltd. HTTP API service Provides object-oriented access to actual endpoints (https://api-live.exante.eu/api-docs/)
+Python library for XNT Ltd. FIX API service Provides object-oriented access to actual endpoints (fix*.exante.eu)
 All methods are strictly typed, python3.7+.
 
 ## Dependencies
